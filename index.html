@@ -430,7 +430,7 @@ const SV_NAME = "担当／石川";      // 例: "習志野センター 〇〇"
   const esc = (x) => String(x).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const rows = [];
   if (SV_PHONE) rows.push(['電話番号', '<a href="tel:' + SV_PHONE.replace(/[^0-9+]/g, "") + '">' + esc(SV_PHONE) + '</a>']);
-  if (SV_ADDRESS) rows.push(['住所', '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(SV_ADDRESS) + '" target="_blank" rel="noopener">' + esc(SV_ADDRESS) + '</a>']);
+  if (SV_ADDRESS) rows.push(['住所', esc(SV_ADDRESS)]);
   if (SV_NAME) rows.push(['名前', esc(SV_NAME)]);
   document.getElementById("contact-info").innerHTML =
     rows.map(r => '<dt>【' + r[0] + '】</dt><dd>' + r[1] + '</dd>').join('');
