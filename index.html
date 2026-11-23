@@ -424,15 +424,16 @@ const CONTACT = "";   // 例: "080-0000-0000（担当：〇〇）"
 
 /* ★ お問い合わせ先（ここに書くとページ下の「お問い合わせ」に表示されます） */
 const SV_PHONE = "";     // 例: "047-000-0000"
-const SV_ADDRESS = "";   // 例: "千葉県習志野市鷺沼台〇-〇-〇"
-const SV_NAME = "";      // 例: "習志野センター 〇〇"
+const SV_ADDRESS = "千葉県習志野市鷺沼台3丁目13-3";   // 例: "千葉県習志野市鷺沼台〇-〇-〇"
+const SV_NAME = "担当／石川";      // 例: "習志野センター 〇〇"
 (function () {
   const esc = (x) => String(x).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const tel = SV_PHONE ? '<a href="tel:' + SV_PHONE.replace(/[^0-9+]/g, "") + '">' + esc(SV_PHONE) + '</a>' : '&nbsp;';
+  const rows = [];
+  if (SV_PHONE) rows.push(['電話番号', '<a href="tel:' + SV_PHONE.replace(/[^0-9+]/g, "") + '">' + esc(SV_PHONE) + '</a>']);
+  if (SV_ADDRESS) rows.push(['住所', '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(SV_ADDRESS) + '" target="_blank" rel="noopener">' + esc(SV_ADDRESS) + '</a>']);
+  if (SV_NAME) rows.push(['名前', esc(SV_NAME)]);
   document.getElementById("contact-info").innerHTML =
-    '<dt>【電話番号】</dt><dd>' + tel + '</dd>' +
-    '<dt>【住所】</dt><dd>' + (SV_ADDRESS ? esc(SV_ADDRESS) : '&nbsp;') + '</dd>' +
-    '<dt>【名前】</dt><dd>' + (SV_NAME ? esc(SV_NAME) : '&nbsp;') + '</dd>';
+    rows.map(r => '<dt>【' + r[0] + '】</dt><dd>' + r[1] + '</dd>').join('');
 })();
 
 (function () {
